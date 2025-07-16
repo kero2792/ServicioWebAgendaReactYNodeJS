@@ -8,7 +8,6 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Endpoint para listar contactos
 app.get('/api/contactos', async (req, res) => {
   try {
     const response = await axios.get('http://www.raydelto.org/agenda.php');
@@ -19,28 +18,23 @@ app.get('/api/contactos', async (req, res) => {
   }
 });
 
-// Endpoint para almacenar un contacto
 app.post('/api/contactos', async (req, res) => {
   try {
     const { nombre, apellido, telefono } = req.body;
 
-    // Validación de campos requeridos
     if (!nombre || !apellido || !telefono) {
       return res.status(400).json({
         exito: false,
         error: 'Faltan campos requeridos'
       });
     }
-
-    // Crear los parámetros en formato form-urlencoded
     const params = new URLSearchParams();
     params.append('nombre', nombre.trim());
     params.append('apellido', apellido.trim());
     params.append('telefono', telefono.trim());
 
     console.log('Enviando datos:', { nombre, apellido, telefono });
-
-    const response = await axios.post('http://www.raydelto.org/agenda.php', 
+    const response = await axios.post('http://www.raydelto.org/agenda.php',
       {
         nombre: nombre.trim(),
         apellido: apellido.trim(),
@@ -56,7 +50,6 @@ app.post('/api/contactos', async (req, res) => {
 
     console.log('Respuesta del servidor:', response.data);
 
-    // Retornar respuesta exitosa
     res.json({
       exito: true,
       mensaje: 'Contacto almacenado correctamente',

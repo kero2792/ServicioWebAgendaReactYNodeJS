@@ -9,7 +9,6 @@ function ContactForm({ onAdd }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación de campos
     if (!nombre.trim() || !apellido.trim() || !telefono.trim()) {
       alert("Por favor complete todos los campos");
       return;
@@ -37,10 +36,7 @@ function ContactForm({ onAdd }) {
       console.log('Respuesta del servidor:', data);
 
       if (data.exito === true) {
-        // Agregar el contacto a la lista
         onAdd(contacto);
-
-        // Limpiar el formulario
         setNombre("");
         setApellido("");
         setTelefono("");
